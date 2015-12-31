@@ -69,6 +69,8 @@ object Main {
 
       val body = wsResponse.body.toString
 
+      println(s"status: ${wsResponse.status}")
+
       val links = olx.getOlxLinks(Jsoup.parse(body)).distinct
 
       println(s"links count: ${links.length}, some of the links may be empty.")
@@ -82,13 +84,15 @@ object Main {
           val adPage = PirateUtils.getPageHtml(link)
 
           adPage map { wsResponse =>
+            println(s"status: ${wsResponse.status}")
             val body = wsResponse.body.toString
             val info = olx.getAdInfo(Jsoup.parse(body))
             println(link -> info)
             dataProcessor(link, info)
           }
           adPage.recover { case th => println(s"fetching ad page failed: ${th.getMessage}") }
-          Await.result(adPage, 2 minutes)
+          println("waiting for ad page ...")
+          Await.result(adPage, 1 minutes)
         }
 
         opLink.getOrElse {
@@ -99,14 +103,6 @@ object Main {
 
     }
 
-    f onComplete {
-      case Success(value) =>
-        println("Scraping Done")
-        sys.exit(0)
-      case Failure(th) =>
-        println("Scraping done")
-        sys.exit(0)
-    }
     Await.result(f, Duration.Inf)
   }
 
@@ -126,8 +122,8 @@ object Main {
       dataFolder.mkdirs()
     }
 
-    val dataFile = new File(dataFolder, s"olx-scrapping-data-page-${first} to ${last}.csv")
-    val errorFile = new File(dataFolder, s"olx-scrapping-errors-page-${first} to ${last}.csv")
+    val dataFile = new File(dataFolder, s"olx-scrapping-data-page-${first}-${last}.csv")
+    val errorFile = new File(dataFolder, s"olx-scrapping-errors-page-${first}-${last}.csv")
 
     val filePair = dataFile -> errorFile
 
