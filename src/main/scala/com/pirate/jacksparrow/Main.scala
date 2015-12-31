@@ -69,7 +69,7 @@ object Main {
 
       val body = wsResponse.body.toString
 
-      val links = olx.getOlxLinks(Jsoup.parse(body))
+      val links = olx.getOlxLinks(Jsoup.parse(body)).distinct
 
       println(s"links count: ${links.length}, some of the links may be empty.")
 
@@ -133,6 +133,7 @@ object Main {
 
     writerLoaner(filePair) { (a, e) => {
       (first to last).foreach { page =>
+        println(s"current page: ${page}")
         stealPage(page) { (link, data) =>
           a.println(dataToCSV(link, data))
           a.flush()

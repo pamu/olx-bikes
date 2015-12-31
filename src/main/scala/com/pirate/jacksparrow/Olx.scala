@@ -40,7 +40,7 @@ trait Olx extends Site {
         val href = atag.attr("href")
         if (href.trim.startsWith("http")) Some(href) else None
       } else None
-    }
+    }.distinct
 
   }
 
