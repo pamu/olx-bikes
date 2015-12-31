@@ -15,10 +15,12 @@ case class OlxAdInfo(
                       model: Try[String],
                       year: Try[String],
                       kmsDriven: Try[String],
-                      heading: Try[String],
                       cost: Try[String],
                       location: Try[String],
-                      sinceline: Try[String])
+                      sinceline: Try[String],
+                      time: Try[String],
+                      heading: Try[String]
+                    )
 
 trait Olx extends Site {
 
@@ -51,10 +53,11 @@ trait Olx extends Site {
       getAdModel,
       getAdYear,
       getAdKMSDriven,
-      getAdHeading,
       getAdCost,
       getAdPostingLocation,
-      getAdSinceline
+      getAdSinceline,
+      getAdTime,
+      getAdHeading
     )
   }
 
@@ -168,6 +171,17 @@ trait Olx extends Site {
           sinceline <- sinceElem.text()
         } yield sinceline
       sincelineOut.mkString
+    }
+  }
+
+  def getAdTime(implicit parsedAdPage: Document): Try[String] = {
+    import scala.collection.JavaConversions._
+    Try {
+      val timeOut =
+        for {
+          elem <- parsedAdPage.getElementsByClass("brlefte5")
+        } yield elem
+      timeOut.head.text
     }
   }
 

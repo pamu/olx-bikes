@@ -52,11 +52,11 @@ object Main {
   }
 
   def dataToCSV(link: String, olxAdInfo: OlxAdInfo): String = {
-    s"""${link}    ${olxAdInfo.phone.str}    ${olxAdInfo.brand.str}    ${olxAdInfo.model.str}    ${olxAdInfo.year.str}    ${olxAdInfo.kmsDriven.str}    ${olxAdInfo.location.str}    ${olxAdInfo.cost.str}    ${olxAdInfo.sinceline.str}    ${olxAdInfo.heading.str}"""
+    s"""${link}    ${olxAdInfo.phone.str}    ${olxAdInfo.brand.str}    ${olxAdInfo.model.str}    ${olxAdInfo.year.str}    ${olxAdInfo.kmsDriven.str}    ${olxAdInfo.location.str}    ${olxAdInfo.cost.str}    ${olxAdInfo.sinceline.str}    ${olxAdInfo.time.str}    ${olxAdInfo.heading.str}"""
   }
 
   def errorToCSV(link: String, olxAdInfo: OlxAdInfo): String = {
-    s"""${link}    ${olxAdInfo.phone.err}    ${olxAdInfo.brand.err}    ${olxAdInfo.model.err}    ${olxAdInfo.year.err}    ${olxAdInfo.kmsDriven.err}    ${olxAdInfo.location.err}    ${olxAdInfo.cost.err}    ${olxAdInfo.sinceline.err}    ${olxAdInfo.heading.err}"""
+    s"""${link}    ${olxAdInfo.phone.err}    ${olxAdInfo.brand.err}    ${olxAdInfo.model.err}    ${olxAdInfo.year.err}    ${olxAdInfo.kmsDriven.err}    ${olxAdInfo.location.err}    ${olxAdInfo.cost.err}    ${olxAdInfo.sinceline.err}    ${olxAdInfo.time.err}    ${olxAdInfo.heading.err}"""
   }
 
   def stealPage(page: Int)(dataProcessor: (String, OlxAdInfo) => Unit): Unit = {
