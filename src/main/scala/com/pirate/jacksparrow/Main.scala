@@ -92,7 +92,7 @@ object Main {
           }
           adPage.recover { case th => println(s"fetching ad page failed: ${th.getMessage}") }
           println("waiting for ad page ...")
-          Await.result(adPage, 1 minutes)
+          Await.result(adPage, 2  minutes)
         }
 
         opLink.getOrElse {
