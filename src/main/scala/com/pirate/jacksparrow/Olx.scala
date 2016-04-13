@@ -24,7 +24,7 @@ case class OlxAdInfo(
 
 trait Olx extends Site {
 
-  def olx(page: Int = 1) = s"http://olx.in/bangalore/motorcycles/?page=$page"
+  def olx(page: Int = 1) = s"http://olx.in/bangalore/bikes/?page=$page"
 
   def getOlxLinks(parsedLinksPage: Document): List[Option[String]] = {
     val parsedBody = parsedLinksPage
